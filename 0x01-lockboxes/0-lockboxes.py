@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 def canUnlockAll(boxes):
+    """Unlock Boxes"""
     unlocked_boxes = [False] * len(boxes)
     unlocked_boxes[0] = True
     stack = [key for key in boxes[0]]
