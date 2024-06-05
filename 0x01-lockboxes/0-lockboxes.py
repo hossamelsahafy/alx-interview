@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+canUnlockAll
+"""
 def canUnlockAll(boxes):
     """Unlock Boxes"""
     unlocked_boxes = [False] * len(boxes)
