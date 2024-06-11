@@ -17,7 +17,9 @@ def minOperations(n):
             n (int): The desired number of 'H' characters.
 
         Returns:
-            int: The minimum number of operations to get n 'H' characters. If n is impossible to achieve, return 0.
+            int: The minimum number of operations to get
+            n 'H' characters.
+            If n is impossible to achieve, return 0.
     """
     if n <= 1:
         return 0
