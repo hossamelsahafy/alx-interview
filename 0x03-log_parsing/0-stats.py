@@ -3,34 +3,46 @@
     Log parsing
 """
 import sys
-import re
+
+def print_msg(codes, file_size):
+    print("File size: {}".format(file_size))
+    for key, val in sorted(codes.items()):
+        if val != 0:
+            print("{}: {}".format(key, val))
+
 
 file_size = 0
-status_codes = {}
+code = 0
+count_lines = 0
+codes = {
+    "200": 0,
+    "301": 0,
+    "400": 0,
+    "401": 0,
+    "403": 0,
+    "404": 0,
+    "405": 0,
+    "500": 0
+}
 
 try:
-    for i, line in enumerate(sys.stdin):
-        pattern = (
-            r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[.*\] "
-            r"\"GET /projects/260 HTTP/1.1\" (\d+) (\d+)$"
-        )
+    for line in sys.stdin:
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
 
-        match = re.match(pattern, line)
+        if len(parsed_line) > 2:
+            count_lines += 1
 
-        if match:
-            file_size += int(match.group(2))
-            status_code = int(match.group(1))
-            if status_code in status_codes:
-                status_codes[status_code] += 1
-            else:
-                status_codes[status_code] = 1
+            if count_lines <= 10:
+                file_size += int(parsed_line[0])
+                code = parsed_line[1]
 
-        if (i + 1) % 10 == 0:
-            print("File size:", file_size)
-            for status_code in sorted(status_codes.keys()):
-                print(f"{status_code}: {status_codes[status_code]}")
+                if (code in codes.keys()):
+                    codes[code] += 1
 
-except KeyboardInterrupt:
-    print("File size:", file_size)
-    for status_code in sorted(status_codes.keys()):
-        print(f"{status_code}: {status_codes[status_code]}")
+            if (count_lines == 10):
+                print_msg(codes, file_size)
+                count_lines = 0
+
+finally:
+    print_msg(codes, file_size)
