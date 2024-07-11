@@ -18,8 +18,11 @@ request(url, (error, res, body) => {
     }
     const film = JSON.parse(body);
     const characters = film.characters;
-    characters.forEach((character) => {
-        request(character, (error, res, body) => {
+    exactOrder(characters, 0);
+});
+    const exactOrder = (characters, index) => {
+        if (index === characters.length) return;
+        request(characters[index], (error, res, body) => {
             if (error) {
                 console.log(error);
                 return;
@@ -28,8 +31,8 @@ request(url, (error, res, body) => {
                 console.log('Failed To Get Character');
                 return;
             }
-            const characterName = JSON.parse(body);
-            console.log(characterName.name);
-        })
-    })
-});
+            const character = JSON.parse(body);
+            console.log(character.name);
+            exactOrder(characters, index + 1);
+    });
+};
