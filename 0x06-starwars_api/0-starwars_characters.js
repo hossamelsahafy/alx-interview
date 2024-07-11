@@ -6,7 +6,7 @@ if (process.argv.length !== 3) {
 }
 
 const movieID = process.argv[2];
-const url = `https://swapi-api.alx-tools.com/api/films/${movieID}/`;
+const url = `https://swapi-api.hbtn.io/api/films/${movieID}/`;
 request(url, (error, res, body) => {
     if (error) {
         console.log(error);
