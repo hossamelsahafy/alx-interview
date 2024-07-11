@@ -1,5 +1,7 @@
 #!/usr/bin/node
+
 const request = require('request');
+
 if (process.argv.length !== 3) {
     console.log('Usage: ./0-starwars_characters.js <film_id>');
     process.exit(1);
