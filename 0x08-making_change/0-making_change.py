@@ -2,7 +2,7 @@
 """Change comes from within"""
 
 
-def makeChange(coins, total):
+def makeChange(coins, total) -> int:
     """Make Change Method"""
     dp = [float('inf')] * (total + 1)
     dp[0] = 0
