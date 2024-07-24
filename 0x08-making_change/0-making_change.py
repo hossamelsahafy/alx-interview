@@ -4,6 +4,9 @@
 
 def makeChange(coins, total) -> int:
     """Make Change Method"""
+    if total <= 0:
+        return 0
+
     dp = [float('inf')] * (total + 1)
     dp[0] = 0
 
