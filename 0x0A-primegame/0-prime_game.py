@@ -6,45 +6,47 @@
 
 def isWinner(x, nums):
     """Is Winner Method"""
-    def generate_primes(max_n):
-        """Generate Primes Method"""
-        is_prime = [True] * (max_n + 1)
+    if x <= 0 or not nums:
+        return None
+
+    def sieve(n):
+        """Sieve Method"""
+        is_prime = [True] * (n + 1)
         p = 2
-        while (p * p <= max_n):
-            if (is_prime[p]):
-                for i in range(p * p, max_n + 1, p):
+        while (p * p <= n):
+            if (is_prime[p] == True):
+                for i in range(p * p, n + 1, p):
                     is_prime[i] = False
             p += 1
-        return [p for p in range(2, max_n + 1) if is_prime[p]]
+        is_prime[0], is_prime[1] = False, False
+        return [p for p in range(n + 1) if is_prime[p]]
 
-    def simulate_game(n):
-        """Simulate Game Method"""
-        if n < 2:
-            return 'Ben'
-        primes = generate_primes(n)
-        is_in_game = [True] * (n + 1)
-        moves = 0
-        for prime in primes:
-            if prime > n:
-                break
-            if is_in_game[prime]:
-                moves += 1
-                for multiple in range(prime, n + 1, prime):
-                    is_in_game[multiple] = False
-        return 'Maria' if moves % 2 == 1 else 'Ben'
+    max_num = max(nums)
+    primes = sieve(max_num)
 
     maria_wins = 0
     ben_wins = 0
+
     for n in nums:
-        winner = simulate_game(n)
-        if winner == 'Maria':
+        primes_in_game = [p for p in primes if p <= n]
+        if not primes_in_game:
+            ben_wins += 1
+            continue
+
+        turn = 0
+        while primes_in_game:
+            prime = primes_in_game.pop(0)
+            primes_in_game = [p for p in primes_in_game if p % prime != 0]
+            turn += 1
+
+        if turn % 2 == 1:
             maria_wins += 1
-        elif winner == 'Ben':
+        else:
             ben_wins += 1
 
     if maria_wins > ben_wins:
-        return 'Maria'
+        return "Maria"
     elif ben_wins > maria_wins:
-        return 'Ben'
+        return "Ben"
     else:
         return None
