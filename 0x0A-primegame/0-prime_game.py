@@ -3,9 +3,7 @@
     Prime Game
 """
 def isWinner(x, nums):
-    """Is Winner"""
     def generate_primes(max_n):
-        """Generate  Primes"""
         is_prime = [True] * (max_n + 1)
         p = 2
         while (p * p <= max_n):
@@ -16,7 +14,9 @@ def isWinner(x, nums):
         return [p for p in range(2, max_n + 1) if is_prime[p]]
 
     def simulate_game(n):
-        """Simulate Game"""
+        if n < 2:
+            return 'Ben'  # No prime numbers to pick
+        
         primes = generate_primes(n)
         is_in_game = [True] * (n + 1)
         moves = 0
@@ -38,7 +38,7 @@ def isWinner(x, nums):
         winner = simulate_game(n)
         if winner == 'Maria':
             maria_wins += 1
-        else:
+        elif winner == 'Ben':
             ben_wins += 1
     
     if maria_wins > ben_wins:
@@ -47,5 +47,3 @@ def isWinner(x, nums):
         return 'Ben'
     else:
         return None
-
-print("Winner: {}".format(isWinner(5, [2, 5, 1, 4, 3])))
