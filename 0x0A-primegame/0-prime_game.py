@@ -14,7 +14,7 @@ def isWinner(x, nums):
         is_prime = [True] * (n + 1)
         p = 2
         while (p * p <= n):
-            if (is_prime[p] == True):
+            if (is_prime[p]):
                 for i in range(p * p, n + 1, p):
                     is_prime[i] = False
             p += 1
